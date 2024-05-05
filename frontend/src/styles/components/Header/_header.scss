@@ -1,0 +1,23 @@
+.header {
+    color: $foreground-primary;
+    font-family: $font-primary;
+    background-color: $background-primary;
+    @include flexSpaceBetween;
+    flex-wrap: nowrap;
+    border: 1px solid $foreground-primary;
+    border-style: none none solid none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
+.header-action-btn {
+    @include buttonStyle;
+    font-size: 18px;
+}
+
+.user-actions {
+    @include flexCenterRow;
+    gap: 10px;
+}

@@ -1,0 +1,16 @@
+@import 'base/colors';
+@import 'base/animations';
+@import 'base/mixins';
+@import 'base/typography';
+@import 'components/Header/header';
+@import 'components/Items/itemCard';
+@import 'icons/icons';
+
+*{
+    margin: 0;
+}
+
+a {
+    all: unset;
+    cursor: pointer;
+}

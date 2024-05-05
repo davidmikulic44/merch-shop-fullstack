@@ -1,0 +1,37 @@
+.item-card {
+    width: 408px;
+    height: 566px;
+    @include flexCenterColumn;
+    gap: 20px;
+    background-color: $gray-dark;
+    border-radius: 20px;
+}
+
+.item-card-image {
+    width: 347px;
+    height: 443px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.item-card-info {
+    @include flexSpaceAround;
+    align-items: center;
+    font-family: $font-primary;
+    color: $foreground-primary;
+}
+
+.item-card-title {
+    font-size: 25px;
+}
+
+.item-card-price {
+    background-color: $foreground-primary;
+    color: $background-primary;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.item-card-category {
+    color: $gray-light;
+}

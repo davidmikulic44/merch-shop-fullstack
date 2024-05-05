@@ -1,0 +1,99 @@
+@import 'animations';
+
+@mixin buttonStyle {
+    padding: 10px;
+    font-weight: 700;
+
+  &:hover {
+    background-color: white;
+    color: black;
+    transition: 0.2s linear;
+    cursor: pointer;
+  }
+}
+
+@mixin buttonStyleSpecial {
+  width: fit-content;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid $green-light;
+  background: $green-primary; 
+  color: $background-primary;
+  text-align: center;
+  font-family: inherit;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  align-self: flex-start;
+  transition: all $animation-main-duration ease-in-out;
+
+  &:hover {
+    background-color: $background-primary;
+    border: 2px solid $green-primary;
+    color: $foreground-primary;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: $green-light;
+    border: 2px solid $green-primary;
+    color: $background-primary;
+    transition: $animation-main-duration;
+  }
+}
+
+@mixin textStyleScrolling {
+  font-family: $font-secondary;
+  color: $green-light;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+
+@mixin flexCenterRow() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+@mixin flexCenterColumn() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@mixin flexCenterVertical() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flexCenterHorizontal() {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flexSpaceBetween() {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flexSpaceAround() {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+@mixin flexColumn() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flexRow() {
+  display: flex;
+  flex-direction: row;
+}
