@@ -1,39 +1,58 @@
-import { validationResult } from 'express-validator';
-import * as userModel from '../models/userModel.js';
+// authController.js
 
-export const login = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+import bcrypt from 'bcrypt';
+import knex from '../../db/knex';
 
+const createUser = async (req, res) => {
+  // Extract user data from request body
+  const { firstname, lastname, email, password } = req.body;
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Log the hashed password
+  console.log('Hashed Password:', hashedPassword);
+
+  // Store user data in the database
+  await knex('user').insert({
+    firstname,
+    lastname,
+    email,
+    password: hashedPassword
+  });
+
+  // Send response
+  res.status(201).json({ message: 'User created successfully' });
+};
+
+const loginUser = async (req, res) => {
+  // Extract email and password from request body
   const { email, password } = req.body;
 
-  try {
-    const user = await userModel.getUserByEmail(email);
-    if (!user) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
-    }
+  // Retrieve user data from the database based on email
+  const user = await knex('user').where({ email }).first();
 
-    const isPasswordValid = await userModel.validatePassword(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
-    }
-
-    req.session.user = user;
-    res.status(200).json({ msg: 'Login successful', user });
-  } catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ msg: 'Server error' });
+  // Check if user exists
+  if (!user) {
+    return res.status(401).json({ message: 'Invalid email or password' });
   }
+
+  // Compare the provided password with the hashed password stored in the database
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  // Log the result of password comparison
+  console.log('Password Match:', passwordMatch);
+
+  // Check if password doesn't match
+  if (!passwordMatch) {
+    return res.status(401).json({ message: 'Invalid email or password' });
+  }
+
+  // Password matches, generate JWT token
+  const token = generateToken(user.id);
+
+  // Send token in response
+  res.status(200).json({ token });
 };
 
-export const logout = async (req, res) => {
-  try {
-    req.session.destroy();
-    res.status(200).json({ msg: 'Logout successful' });
-  } catch (error) {
-    console.error('Error logging out:', error);
-    res.status(500).json({ msg: 'Server error' });
-  }
-};
+export { createUser, loginUser };

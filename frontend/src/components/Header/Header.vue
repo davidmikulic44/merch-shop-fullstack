@@ -10,7 +10,7 @@ import Cart from '../../assets/icons/Cart.vue';
             <div class="user-actions">
                 <Cart class="header-action-btn"></Cart>
                 <RouterLink to="/login" class="header-action-btn">LOGIN</RouterLink>
-                <h1 class="header-action-btn">REGISTER</h1>
+                <RouterLink to="/register" class="header-action-btn">REGISTER</RouterLink>
             </div>
     </header>
 </template>
