@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, loginUser } from '../controllers/authController.js'; // Import controller functions
+import { createUser, loginUser, getUserByEmail } from '../controllers/authController.js'; // Import controller functions
 import knex from '../../db/knex.js'
 
 
@@ -15,6 +15,10 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   await loginUser(req, res, req.db); // Pass db connection to loginUser
+});
+
+router.get('/user/:email', async (req, res) => {
+  await getUserByEmail(req, res, req.db);
 });
 
 export default router;

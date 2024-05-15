@@ -4,6 +4,7 @@ import express from 'express';
 import serveStatic from 'serve-static';
 import dotenv from 'dotenv';
 import authRoutes from './src/routes/authRoutes.js';
+import itemRoutes from './src/routes/itemRoutes.js'
 import db from './db/db.js'; // Import the database connection
 
 const app = express();
@@ -17,9 +18,9 @@ router.use((req, res, next) => {
     next();
 });
 
-// Test the database connection
 
 app.use('/auth', authRoutes);
+app.use('/items', itemRoutes)
 app.use(serveStatic("../frontend/dist"));
 
 const port = process.env.PORT || 3000;
