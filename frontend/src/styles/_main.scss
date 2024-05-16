@@ -3,11 +3,13 @@
 @import 'base/mixins';
 @import 'base/typography';
 @import 'components/Header/header';
+@import 'components/LoginForm/loginForm';
 @import 'components/Items/itemCard';
 @import 'icons/icons';
 
 *{
     margin: 0;
+    font-family: $font-primary;
 }
 
 a {

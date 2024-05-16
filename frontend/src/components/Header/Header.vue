@@ -16,6 +16,8 @@ const logout = () => {
   // Redirect to the login page or another appropriate page
   router.push('/');
 };
+
+
 </script>
 
 <template>
@@ -34,7 +36,3 @@ const logout = () => {
     </div>
   </header>
 </template>
-
-<style scoped>
-/* Add your styles here */
-</style>
