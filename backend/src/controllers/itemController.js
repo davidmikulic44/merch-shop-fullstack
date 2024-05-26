@@ -4,7 +4,12 @@ import knex from '../../db/knex.js';
 
 export const getItems = async (req, res) => {
   try {
-    const items = await knex('item').select('*');
+
+    const items = await knex('item')
+    .join('images', 'item.id', '=', 'images.item_id')
+    .where('images.is_main_image', 1)
+    .select('item.*', 'images.image as image');
+
     res.status(200).json(items);
   } catch (error) {
     console.error('Error fetching items:', error);
