@@ -11,7 +11,7 @@ $animation-main-duration: 0.15s;
     }
 }
 
-@keyframes BigToSmall {
+@keyframes bigToSmall {
     0% {
         transform: scale(1);
     }
@@ -21,4 +21,10 @@ $animation-main-duration: 0.15s;
     100% {
         transform: scale(1);
     }
+}
+
+@keyframes gradientScroll {
+    0%{background-position:0% 68%}
+    50%{background-position:100% 33%}
+    100%{background-position:0% 68%}
 }

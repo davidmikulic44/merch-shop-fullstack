@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/Loginview.vue'
 import RegisterView from '../views/RegisterView.vue'
+import ProductView from '../views/ProductView.vue'
 const routes = [
     { 
         path: '/', 
@@ -24,6 +25,13 @@ const routes = [
           title: "Register",
       }
     },
+    {
+      path: '/product',
+      component: ProductView,
+      meta : {
+        title: "Product",
+      }
+    }
     ]
   
   const router = createRouter({

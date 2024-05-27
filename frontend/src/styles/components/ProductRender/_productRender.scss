@@ -1,0 +1,10 @@
+.three-container {
+    cursor: crosshair;
+    border-radius: 10px;
+    overflow: hidden;
+   
+    canvas {
+ width: 500px;
+    height: 500px;
+    }
+}

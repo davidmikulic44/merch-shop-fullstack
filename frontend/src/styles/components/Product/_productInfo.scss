@@ -1,0 +1,28 @@
+.product-info-container {
+    
+}
+
+.product-title {
+    font-size: 3rem;
+}
+
+.product-info {
+    @include flexColumn;
+    gap: 10px;
+
+}
+
+.product-category {
+    color: $gray-light;
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.product-price {
+    background-color: $foreground-primary;
+    color: $background-primary;
+    width: 4rem;
+    text-align: center;
+    padding: 5px;
+    font-size: 2rem;
+}

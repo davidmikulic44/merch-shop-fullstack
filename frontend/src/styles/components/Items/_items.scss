@@ -1,0 +1,7 @@
+.items-container {
+    @include flexCenterHorizontal;
+    gap: 1.9rem;
+    flex-wrap: wrap;
+    background-color: $background-secondary;
+    padding: 2.2rem;
+}

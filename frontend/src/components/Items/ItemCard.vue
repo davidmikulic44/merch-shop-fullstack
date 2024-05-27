@@ -13,9 +13,9 @@ const props = defineProps({
     <section class="item-card-info">
       <div class="item-card-text">
         <h3 class="item-card-title">{{ item.name }}</h3>
-        <p class="item-card-category">t-shirt</p>
       </div>
       <h3 class="item-card-price">{{ item.price }}&euro;</h3>
     </section>
   </article>
+  
 </template>

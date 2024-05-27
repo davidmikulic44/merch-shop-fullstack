@@ -1,33 +1,69 @@
 .item-card {
-    width: 408px;
-    height: 566px;
+    width: 18rem; // 408px
+    height: 27rem; // 566px
     @include flexCenterColumn;
     gap: 20px;
-    background-color: $gray-dark;
     border-radius: 20px;
+    &:hover {
+        cursor: pointer;
+        .item-card-image {
+            animation: bigToSmall infinite 0.9s, gradientScroll infinite 1s ease;
+
+                padding: 5px;
+        }
+        .item-card-title {
+            &:after {
+                transform-origin: bottom left;
+                transform: scaleX(1);
+                animation: gradientScroll infinite 1s ease;
+                
+            }
+            font-weight: bolder;
+        }
+    }
 }
 
 .item-card-image {
-    width: 347px;
-    height: 443px;
+    width: 85%; // 85% of the parent width (408px * 0.85 ≈ 347px)
+    height: 78%; // 78% of the parent height (566px * 0.78 ≈ 443px)
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 8px;
+    transition: all ease-in-out 0.1s;
+    background: linear-gradient(270deg, #569d45, #b2ffe1, #34d334);
+    background-size: 600% 600%;
+    
 }
 
 .item-card-info {
-    @include flexSpaceAround;
+    @include flexCenterColumn;
     align-items: center;
     font-family: $font-primary;
     color: $foreground-primary;
+    gap: 0.3rem;
 }
 
 .item-card-title {
     font-size: 25px;
+    display: inline-block;
+    position: relative;
+    transition: all ease-in-out 0.2s;
+    &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        bottom: -3px;
+        left: 0;
+        background: linear-gradient(270deg, #569d45, #b2ffe1, #b2ffb2);
+        background-size: 600% 600%;
+        transform: scaleX(0);
+        transform-origin: bottom right;
+        transition: transform 0.3s;
+    }
 }
 
 .item-card-price {
-    background-color: $foreground-primary;
-    color: $background-primary;
+    color: $gray-mid;
     padding: 5px;
     font-size: 20px;
 }

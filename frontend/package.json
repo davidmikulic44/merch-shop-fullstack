@@ -13,7 +13,10 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
+    "@splidejs/vue-splide": "^0.6.12",
     "axios": "^1.6.8",
+    "three": "^0.134.0",
+    "three-gltf-loader": "^1.111.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2"
   },
