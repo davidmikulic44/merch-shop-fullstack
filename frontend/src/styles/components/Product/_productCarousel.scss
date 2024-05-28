@@ -1,13 +1,23 @@
-.product-carousel-slide {
+.product-carousel {
     width: 500px;
-    height: 500px;
-    img {
-        object-fit: cover;
-    }
+    height: 600px;
 }
 
 .product-carousel-image {
     width: 500px;
     height: 500px;
     object-fit: cover;
+    border-radius: 10px;
+}
+
+.carousel-thumbs {
+    padding-top: 10px;
+    visibility: visible !important;
+}
+
+.product-carousel-image-small {
+    border-radius: 8px;
+    object-fit: cover;
+    height: 110px;
+    width: 100px;
 }

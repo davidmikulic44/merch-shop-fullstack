@@ -9,6 +9,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const container = ref(null);
+let isRotating = ref(true);
 let camera, scene, renderer, controls, model;
 
 onMounted(() => {
@@ -22,11 +23,10 @@ function initThree() {
     // Set the background to a dark gray gradient
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = 300;
+    canvas.height = 600;
     const gradient = context.createLinearGradient(0, 0, 0, canvas.height);
-    gradient.addColorStop(1, "#050505"); // Dark gray
-    gradient.addColorStop(0, "#333333"); // Lighter gray
+    gradient.addColorStop(1, "#010501"); // Dark gray
     context.fillStyle = gradient;
     context.fillRect(0, 0, canvas.width, canvas.height);
     const backgroundTexture = new THREE.CanvasTexture(canvas);
@@ -35,14 +35,14 @@ function initThree() {
     // Create a camera
     camera = new THREE.PerspectiveCamera(
         75,
-        1,
+        canvas.width / canvas.height,
         0.1,
         1000
     );
 
     // Create a renderer
-    renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setSize(500, 500);
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(canvas.width, canvas.height);
 
     // Append the renderer's DOM element to the container
     container.value.appendChild(renderer.domElement);
@@ -83,10 +83,11 @@ function initThree() {
             const ambientLight = new THREE.AmbientLight(0xffffff, 1);
             scene.add(ambientLight);
             const directionalLight = new THREE.DirectionalLight(0xf542bc, 1);
-            const directionalLight2 = new THREE.DirectionalLight(0xf542bc, 1);
+            const directionalLight2 = new THREE.DirectionalLight(0x42f5bc, 0.3);
             directionalLight.position.set(0, 1, 0);
-            directionalLight2.position.set(1,0,0);
+            directionalLight2.position.set(1, 0, 0);
             scene.add(directionalLight);
+            scene.add(directionalLight2);
         },
         undefined,
         (error) => {
@@ -94,8 +95,18 @@ function initThree() {
         }
     );
 
+    // Add a grid floor
+    const gridHelper = new THREE.GridHelper(50, 50);
+    gridHelper.material.opacity = 0.1; // Set the desired opacity
+    gridHelper.material.transparent = true; // Enable transparency
+    gridHelper.position.y = -1; // Move the grid floor down
+    scene.add(gridHelper);
+
     // Animation loop
     const animate = () => {
+        if (!isRotating) {
+            console.log("pozz");
+        }
         requestAnimationFrame(animate);
 
         // Rotate the model
@@ -105,18 +116,16 @@ function initThree() {
 
         renderer.render(scene, camera);
     };
+
     animate();
 }
 
 // Handle window resize
-
 </script>
 
 <style scoped>
 .three-container {
     position: relative;
-    width: 500px;
-    height: 500px;
 }
 .three-canvas {
     display: block;

@@ -1,8 +1,18 @@
 .product-view-container {
     @include flexCenterRow;
-    height: 90vh;
-    background-color: $background-primary;
-    color: $foreground-primary;
+    height: 100vh;
     gap: 30px;
     flex-wrap: wrap;
+}
+
+.product-visuals-container {
+    @include flexCenterRow;
+    gap: 20px;
+    flex-wrap: wrap-reverse;
+}
+
+.single-product-container {
+    @include flexCenterRow;
+    background-color: $background-primary;
+    color: $foreground-primary;
 }

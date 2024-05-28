@@ -2,9 +2,12 @@
     cursor: crosshair;
     border-radius: 10px;
     overflow: hidden;
-   
+    &:active {
+        cursor:grabbing;
+    }
+    border: 1px solid white;
     canvas {
- width: 500px;
-    height: 500px;
+        width: 500px;
+        height: 500px;
     }
 }
