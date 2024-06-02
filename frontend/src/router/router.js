@@ -26,8 +26,10 @@ const routes = [
       }
     },
     {
-      path: '/product',
+      path: '/item/:id',
       component: ProductView,
+      name: 'ItemDetail',
+      props: true,
       meta : {
         title: "Product",
       }

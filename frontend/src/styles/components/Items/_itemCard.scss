@@ -1,6 +1,6 @@
 .item-card {
-    width: 18rem; // 408px
-    height: 27rem; // 566px
+    width: 20rem; // 408px
+    height: 30rem; // 566px
     @include flexCenterColumn;
     gap: 20px;
     border-radius: 20px;
@@ -16,7 +16,6 @@
                 transform-origin: bottom left;
                 transform: scaleX(1);
                 animation: gradientScroll infinite 1s ease;
-                
             }
             font-weight: bolder;
         }

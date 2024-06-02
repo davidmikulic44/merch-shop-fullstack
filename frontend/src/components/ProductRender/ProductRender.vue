@@ -12,6 +12,8 @@ const container = ref(null);
 let isRotating = ref(true);
 let camera, scene, renderer, controls, model;
 
+const props = defineProps(["modelPath"]);
+
 onMounted(() => {
     initThree();
 });
@@ -63,17 +65,16 @@ function initThree() {
     controls.minPolarAngle = 1;
     controls.maxPolarAngle = 2;
     controls.update(camera.position.set(5, 6, 100));
-
     // Load the glTF model
     const loader = new GLTFLoader();
     loader.load(
         // Adjust the path to match the correct location of your model
-        "/src/assets/models/girslovesbl/scene.gltf",
+        props.modelPath,
         (gltf) => {
             // Add the loaded model to the scene
             model = gltf.scene;
             scene.add(model);
-            model.position.y = -1;
+            model.position.y = -1.1;
             // Adjust the camera position to focus on the loaded model
             const boundingBox = new THREE.Box3().setFromObject(model);
             const size = boundingBox.getSize(new THREE.Vector3());
@@ -104,9 +105,6 @@ function initThree() {
 
     // Animation loop
     const animate = () => {
-        if (!isRotating) {
-            console.log("pozz");
-        }
         requestAnimationFrame(animate);
 
         // Rotate the model

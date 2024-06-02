@@ -1,0 +1,33 @@
+.news-carousel-slide {
+    object-fit: cover;
+}
+
+
+.news-carousel-container {
+    position: fixed !important;
+    z-index: -1;
+    top:0;
+}
+
+.scrolling-text {
+    position: absolute;
+    text-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+    color: $green-dark;
+    background-color: $green-light;
+    opacity: 0.5;
+    padding: 8px 0px  8px 0px ;
+    background-blend-mode: color-burn;
+    top: 445px;
+    p {
+        font-family: $font-secondary;
+        font-weight: 500;
+        animation: RightToLeft infinite 15s linear;
+        text-transform: lowercase;
+    }
+}
+
+.carousel-container {
+    position: relative;
+}

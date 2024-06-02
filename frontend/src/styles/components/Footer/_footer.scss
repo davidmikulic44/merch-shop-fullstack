@@ -1,0 +1,24 @@
+.footer {
+    background-color: $background-primary;
+    @include flexSpaceBetween;
+    padding: 4rem;
+    align-items: center;
+}
+
+.social-media-container {
+    @include flexRow;
+    gap: 1rem;
+}
+
+.social-icon {
+    width: 2.4rem;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.copyright-text {
+    color: $foreground-primary;
+    font-size: 1rem;
+    font-weight: 500;
+}
