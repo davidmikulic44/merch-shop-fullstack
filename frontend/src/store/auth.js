@@ -1,3 +1,5 @@
+// auth.js in frontend
+
 import { reactive, toRefs } from 'vue';
 
 const state = reactive({

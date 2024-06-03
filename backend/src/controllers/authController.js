@@ -2,7 +2,6 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import knex from '../../db/knex.js'; // Import knex
 
 const createUser = async (req, res, db) => { // Add db parameter
   try {

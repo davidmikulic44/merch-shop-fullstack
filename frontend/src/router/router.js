@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/Loginview.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ProductView from '../views/ProductView.vue'
+import CartView from '../views/CartView.vue'
+import CheckoutView from '../views/CheckoutView.vue';
 const routes = [
     { 
         path: '/', 
@@ -32,6 +34,22 @@ const routes = [
       props: true,
       meta : {
         title: "Product",
+      }
+    },
+    {
+      path: '/cart',  // The URL path for the cart view
+      component: CartView,
+      name: 'Cart',
+      meta: {
+        title: "Cart",
+      }
+    },
+    {
+      path: '/checkout',  // Define the path for the checkout view
+      component: CheckoutView,
+      name: 'Checkout',
+      meta: {
+        title: "Checkout",
       }
     }
     ]
