@@ -1,0 +1,33 @@
+.album-cover {
+    width: 100px;
+    height: 100px;
+}
+
+.spotify-song {
+    color: $foreground-primary;
+    @include flexRow;
+    background-color: $gray-dark;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 13px;
+    min-width: 320px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background-color: lighten($gray-dark, 10);
+    }
+}
+
+.song-name {
+    font-size: 22px;
+}
+
+.artist-name {
+    font-size: 14px;
+    color: $gray-light;
+}
+
+.song-info {
+    @include flexColumn;
+}

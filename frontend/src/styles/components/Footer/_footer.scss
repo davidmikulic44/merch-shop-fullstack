@@ -3,6 +3,8 @@
     @include flexSpaceBetween;
     padding: 4rem;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
 }
 
 .social-media-container {
@@ -20,5 +22,5 @@
 .copyright-text {
     color: $foreground-primary;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 700;
 }

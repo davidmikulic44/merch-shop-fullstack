@@ -1,0 +1,12 @@
+.admin-container {
+    background-color: $background-primary;
+    color: $foreground-primary;
+}
+.admin-items {
+    @include flexCenterRow;
+    flex-wrap: wrap;
+}
+
+.new-item {
+    @include flexCenterColumn;
+}

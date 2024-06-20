@@ -1,0 +1,92 @@
+.cart-container {
+    @include flexColumn;
+    align-items: center;
+    background-color: $background-primary;
+    color: $foreground-primary;
+    height: 100vh;
+}
+
+.cart-item {
+    @include flexCenterRow;
+    border-radius: 10px;
+    background-color: $gray-dark;
+    gap: 20px;
+    padding: 15px;
+    height: 100px;
+}
+
+.cart-item-info-secondary {
+    @include flexColumn;
+    color: $gray-light;
+}
+
+.cart-item-name {
+    font-size: 30px;
+}
+
+.cart-item-desc {
+}
+
+.cart-item-qty {
+}
+
+.cart-item-price {
+    font-size: 30px;
+    background-color: $foreground-primary;
+    color: $background-primary;
+    font-weight: 700;
+    padding: 5px;
+}
+
+.cart-item-img {
+}
+
+.remove-from-cart {
+}
+
+.cart-item-info {
+    @include flexColumn;
+    width: 300px;
+}
+
+.cart-item-info-primary {
+    @include flexRow;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.cart-items-container {
+    @include flexColumn;
+    gap: 20px;
+}
+
+.remove-from-cart {
+    all: unset;
+    color: $foreground-primary;
+    transition: all 0.1s ease-in-out;
+    padding: 8px;
+    font-size: 30px;
+    cursor: pointer;
+    line-height: 10px;
+    &:hover {
+        background-color: $foreground-primary;
+        color: $background-primary;
+    }
+}
+
+.cart-cost-container {
+    @include flexCenterRow;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.total-cost {
+    @include flexCenterRow;
+    gap: 10px;
+    align-self: flex-start;
+}
+
+.checkout-btn {
+    align-self: flex-end;
+}

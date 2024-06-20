@@ -57,6 +57,7 @@
                     <label
                         type="button"
                         @click="incrementQty"
+                        class="qty-btn"
                         for="qty"
                         id="plus"
                         >+</label
@@ -64,6 +65,7 @@
                     <label
                         type="button"
                         @click="decrementQty"
+                        class="qty-btn"
                         for="qty"
                         id="minus"
                         >-</label
@@ -77,9 +79,12 @@
                         max="5"
                     />
                 </section>
-                <button type="submit" class="submit-button">
+                <button v-if="user" type="submit" class="submit-button">
                     Dodaj u košaricu
                 </button>
+                <RouterLink v-else to="/cart" class="submit-button">
+                    Dodaj u košaricu
+                </RouterLink>
             </form>
         </section>
     </article>

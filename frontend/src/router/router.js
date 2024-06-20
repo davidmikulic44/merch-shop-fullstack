@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue'
 import ProductView from '../views/ProductView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue';
+import ProfileView from '../views/ProfileView.vue'
 const routes = [
     { 
         path: '/', 
@@ -50,6 +51,14 @@ const routes = [
       name: 'Checkout',
       meta: {
         title: "Checkout",
+      }
+    },
+    {
+      path: '/profile',
+      component: ProfileView,
+      name: 'Profile',
+      meta: {
+        title: "Profile",
       }
     }
     ]

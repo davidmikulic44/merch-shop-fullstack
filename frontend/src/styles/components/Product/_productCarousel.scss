@@ -22,3 +22,10 @@
     height: 110px;
     width: 100px;
 }
+
+@media (max-width: 768px) {
+    .product-carousel, .product-carousel-image {
+        width:400px;
+        height: 480px;
+    }
+}
