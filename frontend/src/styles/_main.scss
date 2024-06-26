@@ -17,6 +17,8 @@
 @import 'components/Profile/profile';
 @import 'components/Profile/admin';
 @import 'components/Cart/cart';
+@import 'components/Checkout/checkout';
+@import 'components/Categories/categories';
 @import 'icons/icons';
 
 *{
@@ -27,4 +29,15 @@
 a {
     all: unset;
     cursor: pointer;
+}
+
+.container {
+    background-color: $background-primary;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+::selection {
+    color: $background-primary;
+    background: $green-light;
 }

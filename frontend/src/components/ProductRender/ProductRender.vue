@@ -19,10 +19,7 @@ onMounted(() => {
 });
 
 function initThree() {
-    // Create a scene
     scene = new THREE.Scene();
-
-    // Set the background to a dark gray gradient
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
     canvas.width = 300;
@@ -117,8 +114,6 @@ function initThree() {
 
     animate();
 }
-
-// Handle window resize
 </script>
 
 <style scoped>

@@ -3,13 +3,26 @@
 import knex from '../../db/knex.js';
 
 export const getItems = async (req, res) => {
+  const { category } = req.query; // Get the category from the query parameters
   try {
-    const items = await knex('item')
+    let query = knex('item')
       .leftJoin('images', 'item.id', 'images.item_id')
-      .select('item.*', 'images.image as image')
+      .select('item.*', knex.raw('GROUP_CONCAT(images.image) as images'))
       .groupBy('item.id'); // Group by item id to avoid duplicate items
-    
-    res.status(200).json(items);
+
+    if (category) {
+      query = query.where('item.category_id', knex('categories').select('id').where('category', category));
+    }
+
+    const items = await query;
+
+    // Map images to the item
+    const itemsWithImages = items.map(item => ({
+      ...item,
+      images: item.images ? item.images.split(',') : []  // Split the concatenated string into an array
+    }));
+
+    res.status(200).json(itemsWithImages);
   } catch (error) {
     console.error('Error fetching items:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -57,6 +70,7 @@ export const getItemById = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
 
 export const updateItem = async (req, res) => {
   const { id } = req.params;

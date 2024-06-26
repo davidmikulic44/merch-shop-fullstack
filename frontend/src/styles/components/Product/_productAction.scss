@@ -16,12 +16,14 @@ input[type="radio"] {
     margin: 0; /* Ensures no extra margin around the radio button */
     transition: all 0.05s ease-in-out;
     &:checked::before {
-        background: #73FF42;
-        border: 2px solid #41722A;
+        background: #56c52d;
+        .single-size {
+            color: $background-primary;
+        }
     }
 }
 input[type="radio"]:hover {
-    background-color: #2B6421;
+    background-color: #2b6421;
 }
 input[type="radio"]:before {
     content: "";
@@ -31,7 +33,6 @@ input[type="radio"]:before {
     border-radius: 50%;
 }
 input[type="radio"]:checked:before {
-    
 }
 
 .single-size {
@@ -61,11 +62,11 @@ input[type="radio"]:checked:before {
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-input[type=number] {
+input[type="number"] {
     all: unset;
     border-bottom: 2px solid white;
     text-align: center;
@@ -75,10 +76,10 @@ input[type=number] {
 }
 
 .quantity {
-    user-select: none; 
+    user-select: none;
     -webkit-user-select: none;
-    -moz-user-select: none; 
-    -ms-user-select: none; 
+    -moz-user-select: none;
+    -ms-user-select: none;
     label {
         position: relative;
         font-size: 1.6rem;
@@ -88,7 +89,6 @@ input[type=number] {
     }
     #plus {
         left: 7.7rem;
-        
     }
     #minus {
         left: 1.1rem;

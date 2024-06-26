@@ -2,7 +2,25 @@
     @include flexCenterHorizontal;
     gap: 1.9rem;
     flex-wrap: wrap;
-    background-color: $background-secondary;
+    background-color: $background-primary;
     padding: 2.2rem;
-    margin-top: 30rem;
+    color: $foreground-primary;
+}
+
+.items-outer-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: $background-primary;
+}
+
+.items-category-title {
+    color: $background-primary;
+    background-color: $foreground-primary;
+    padding: 6px;
+    height: fit-content;
+}
+
+.no-items {
+    height: 70vh;
 }

@@ -13,11 +13,18 @@
 .header-action-btn {
     @include buttonStyle;
     font-size: 18px;
+    text-align: center;
+}
+
+.header-text{
+    color: $foreground-primary;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .user-actions {
     @include flexCenterRow;
-    gap: 10px;
+    gap: 1rem;
 }
 
 .cart-header-icon {
@@ -39,4 +46,9 @@
     border-radius: 50%;
     transform: scale(0.8);
     font-weight: 900;
+}
+
+.header-user {
+    @include flexCenterRow;
+    gap: 1rem;
 }

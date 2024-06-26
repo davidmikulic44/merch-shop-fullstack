@@ -1,5 +1,3 @@
-// src/routes/itemRoutes.js
-
 import express from 'express';
 import { getItems, createItem, getItemById, updateItem, deleteItem } from '../controllers/itemController.js';
 

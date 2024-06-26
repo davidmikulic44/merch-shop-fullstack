@@ -5,27 +5,29 @@ import RegisterView from '../views/RegisterView.vue'
 import ProductView from '../views/ProductView.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue';
+import CheckoutSuccessView from '../views/CheckoutSuccessView.vue'
 import ProfileView from '../views/ProfileView.vue'
+
 const routes = [
     { 
         path: '/', 
         component: HomeView,
         meta: {
-            title: "Home",
+            title: "SBL SHOP®",
         }
     },
     { 
       path: '/login', 
       component: LoginView,
       meta: {
-          title: "Login",
+          title: "Prijavi se",
       }
     },
     { 
       path: '/register', 
       component: RegisterView,
       meta: {
-          title: "Register",
+          title: "Izradi račun",
       }
     },
     {
@@ -34,7 +36,7 @@ const routes = [
       name: 'ItemDetail',
       props: true,
       meta : {
-        title: "Product",
+        title: "Proizvod",
       }
     },
     {
@@ -42,7 +44,7 @@ const routes = [
       component: CartView,
       name: 'Cart',
       meta: {
-        title: "Cart",
+        title: "Košarica",
       }
     },
     {
@@ -50,7 +52,7 @@ const routes = [
       component: CheckoutView,
       name: 'Checkout',
       meta: {
-        title: "Checkout",
+        title: "Naplata",
       }
     },
     {
@@ -60,7 +62,15 @@ const routes = [
       meta: {
         title: "Profile",
       }
-    }
+    },
+    {
+      path: '/checkout/success',
+      component: CheckoutSuccessView,
+      name: 'CheckoutSuccess',
+      meta: {
+        title: "Narudžba zaprimljena",
+      }
+    },
     ]
   
   const router = createRouter({
@@ -80,8 +90,13 @@ const routes = [
     }
   });
   
-  router.beforeEach((to, from)=> {
-    document.title=to.meta?.title ?? 'SBL';
-  })
+  router.beforeEach((to, from, next) => {
+    if (to.meta && to.meta.title) {
+      document.title = to.meta.title;
+    } else {
+      document.title = 'SBL';
+    }
+    next();
+  });
   
   export default router;

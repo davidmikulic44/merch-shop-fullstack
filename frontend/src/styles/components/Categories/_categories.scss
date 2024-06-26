@@ -1,0 +1,23 @@
+.categories-outer-container{
+    background-color: $background-primary;
+    color: $foreground-primary;
+    border-bottom: 2px solid $foreground-primary;
+    border-top: 2px solid $foreground-primary;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.categories {
+    @include flexCenterRow;
+    gap: 3rem;
+}
+
+.category-btn {
+    @include buttonStyle;
+    font-size: 23px;
+}
+
+.active-category {
+    color: $background-primary;
+    background-color: $green-mid;
+}

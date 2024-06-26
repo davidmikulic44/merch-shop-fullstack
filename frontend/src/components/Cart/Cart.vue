@@ -1,64 +1,87 @@
 <template>
-  <div class="cart-container">
-    <div v-if="user && totalCost === 0">
-      <h1>Your cart is empty.</h1>
-    </div>
-    <div v-else-if="user" class="cart-items-container">
-      <h1>Items in cart:</h1>
-      <article class="cart-item" v-for="item in cartItems" :key="item.ID">
-        <!-- Ensure item.image exists and is correctly handled -->
-        <img class="cart-item-img" :src="getItemImage(item)" alt="Item Image" />
-        <section class="cart-item-info">
-          <div class="cart-item-info-primary">
-            <h3 class="cart-item-name">{{ item.name }}</h3>
-            <p class="cart-item-price">{{ item.price * item.quantity }} &euro;</p>
-          </div>
-          <div class="cart-item-info-secondary">
-            <p class="cart-item-desc">{{ item.description }}</p>
-            <p class="cart-item-size">Size: {{ item.size }}</p>
-            <p class="cart-item-qty">Quantity: {{ item.quantity }}</p>
-          </div>
+  <div class="container">
+    <div class="cart-container">
+      <div v-if="user && totalCost === 0">
+        <h1>Vaša košarica je prazna.</h1>
+      </div>
+      <div v-else-if="user" class="cart-items-container">
+        <h1>Artikli u košarici:</h1>
+        <section class="cart-cost-container" v-if="totalCost !== 0 && itemsInCartAmount > 3">
+          <p class="total-cost">
+            Ukupno:
+            <span class="cart-item-price">{{ totalCost }} &euro;</span>
+          </p>
+          <RouterLink
+            v-if="route.path !== '/checkout'"
+            class="submit-button checkout-btn"
+            to="/checkout"
+            >IDI NA NAPLATU</RouterLink
+          >
         </section>
-        <button class="remove-from-cart" @click="removeItemFromCart(item.ID)">
-          <CloseIcon></CloseIcon>
-        </button>
-      </article>
+        <CartItem
+          v-for="item in cartItems"
+          :key="item.ID"
+          :item="item"
+          @removeItem="removeItemFromCart"
+        />
+      </div>
+      <div v-else>
+        <h1>Prijavite se ili izradite korisnički račun kako bi pristupili košarici.</h1>
+      </div>
+      <section class="cart-cost-container" v-if="totalCost !== 0">
+        <p class="total-cost">
+          Ukupno:
+          <span class="cart-item-price">{{ totalCost }} &euro;</span>
+        </p>
+        <RouterLink
+          v-if="route.path !== '/checkout'"
+          class="submit-button checkout-btn"
+          to="/checkout"
+          >IDI NA NAPLATU</RouterLink
+        >
+      </section>
     </div>
-    <div v-else>
-      <h1>Please log in or register.</h1>
-    </div>
-    <section class="cart-cost-container" v-if="totalCost !== 0">
-      <p class="total-cost">Total: <p class="cart-item-price">{{ totalCost }} &euro;</p></p>
-      <RouterLink class="submit-button checkout-btn" to="/checkout">Proceed to Checkout</RouterLink>
-    </section>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import axios from "axios";
 import { useUser } from "../../store/auth.js";
-import CloseIcon from "../../assets/icons/CloseIcon.vue";
+import { fetchCartItemCount } from "../../store/cart.js";
+import CartItem from "./CartItem.vue";
 
 const { user } = useUser();
+const route = useRoute();
 
 const cartItems = ref([]);
 const totalCost = ref(0);
+const itemsInCartAmount = ref(0);
 
+// Destructure emit from the setup context
+const emit = defineEmits(['removeItem']);
+
+// Function to fetch active cart items
 const fetchActiveCart = async () => {
   try {
     const response = await axios.get(`/cart/active-cart/${user.value.ID}`);
     if (response.data.length === 0) {
-      // Handle case where the cart is empty or does not exist
       cartItems.value = [];
       totalCost.value = 0;
     } else {
       cartItems.value = response.data;
       totalCost.value = cartItems.value[0].cost;
     }
+
+    // Update the itemsInCartAmount value
+    itemsInCartAmount.value = cartItems.value.length;
+
+    // Log cart items to debug
+    console.log("Fetched cart items:", cartItems.value);
   } catch (error) {
+    console.error("Error fetching active cart:", error);
     if (error.response && error.response.status === 404) {
-      // Handle 404 error when the cart is not found
       cartItems.value = [];
       totalCost.value = 0;
     } else {
@@ -67,23 +90,21 @@ const fetchActiveCart = async () => {
   }
 };
 
-onMounted(() => {
-  if (user.value) {
-    fetchActiveCart();
-  }
-});
-
+// Function to remove an item from the cart
 const removeItemFromCart = async (cartItemId) => {
   try {
     await axios.delete(`/cart/remove-item/${cartItemId}`);
-    await fetchActiveCart(); // Refresh the cart items after removing an item
+    await fetchActiveCart();
+    await fetchCartItemCount(user.value.ID);
+    emit('removeItem');
   } catch (error) {
     console.error("Failed to remove item from cart:", error);
   }
 };
 
-// Function to get item image URL or provide a placeholder if image URL is missing
-const getItemImage = (item) => {
-  return item.image ? item.image : '/src/assets/images/placeholder.jpg'; // Adjust placeholder image path as needed
-};
+onMounted(() => {
+  if (user.value) {
+    fetchActiveCart();
+  }
+});
 </script>

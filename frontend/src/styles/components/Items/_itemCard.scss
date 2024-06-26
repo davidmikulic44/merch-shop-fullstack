@@ -8,8 +8,7 @@
         cursor: pointer;
         .item-card-image {
             animation: bigToSmall infinite 0.9s, gradientScroll infinite 1s ease;
-
-                padding: 5px;
+            padding: 10px;
         }
         .item-card-title {
             &:after {
@@ -28,9 +27,8 @@
     object-fit: cover;
     border-radius: 8px;
     transition: all ease-in-out 0.1s;
-    background: linear-gradient(270deg, #569d45, #b2ffe1, #34d334);
+    background: linear-gradient(270deg, #909090, #f4f4f4, #c1c1c1);
     background-size: 600% 600%;
-    
 }
 
 .item-card-info {
@@ -53,8 +51,8 @@
         height: 3px;
         bottom: -3px;
         left: 0;
-        background: linear-gradient(270deg, #569d45, #b2ffe1, #b2ffb2);
-        background-size: 600% 600%;
+        background: linear-gradient(270deg, #909090, #f4f4f4, #c1c1c1);
+    background-size: 600% 600%;
         transform: scaleX(0);
         transform-origin: bottom right;
         transition: transform 0.3s;

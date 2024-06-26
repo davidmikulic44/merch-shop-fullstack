@@ -1,4 +1,3 @@
-
 import knex from 'knex';
 import dotenv from 'dotenv';
 
@@ -23,3 +22,5 @@ db.raw('SELECT 1')
   });
 
 export default db;
+
+

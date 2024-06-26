@@ -1,3 +1,60 @@
+<script setup>
+import axios from "axios";
+import { ref } from "vue";
+import { useUser } from "../../store/auth.js";
+import { cartItemCount, sum, updateCart } from "../../store/cart.js"; // Import cart store
+
+const props = defineProps({
+    item: {
+        type: Object,
+        required: true,
+    },
+});
+
+const qty = ref(1);
+const selectedSize = ref("M");
+const incrementQty = () => {
+    if (qty.value < 5) {
+        qty.value++;
+    }
+};
+
+// Decrement quantity
+const decrementQty = () => {
+    if (qty.value > 1) {
+        qty.value--;
+    }
+};
+
+const { user } = useUser();
+
+const addToCart = async () => {
+    const itemId = props.item.ID;
+    const size = selectedSize.value;
+    const quantity = qty.value;
+    const userId = user.value.ID;
+    try {
+        await axios.post("/cart/add-to-cart", {
+            itemId: itemId,
+            size: size,
+            quantity: quantity,
+            userId: userId,
+        });
+        console.log("Added to cart");
+
+        const response = await axios.get(`/cart/active-cart/${userId}`);
+        const itemCount = response.data.length;
+        let totalQuantity = 0;
+        for (let i = 0; i < response.data.length; i++) {
+            totalQuantity += response.data[i].quantity;
+        }
+        updateCart(itemCount, totalQuantity);
+    } catch (error) {
+        console.log("Adding to cart failed");
+    }
+};
+</script>
+
 <template>
     <article class="product-info-container">
         <div class="product-info">
@@ -89,56 +146,3 @@
         </section>
     </article>
 </template>
-
-<script setup>
-import axios from "axios";
-import { ref } from "vue";
-import { useUser } from "../../store/auth.js";
-
-const props = defineProps({
-    item: {
-        type: Object,
-        required: true,
-    },
-});
-
-// Define the quantity state
-const qty = ref(1);
-
-// Define the selected size state
-const selectedSize = ref("M");
-
-// Increment quantity
-const incrementQty = () => {
-    if (qty.value < 5) {
-        qty.value++;
-    }
-};
-
-// Decrement quantity
-const decrementQty = () => {
-    if (qty.value > 1) {
-        qty.value--;
-    }
-};
-
-const { user } = useUser();
-
-const addToCart = async () => {
-    const itemId = props.item.ID; // Assuming the item ID is accessed like this
-    const size = selectedSize.value; // Get the selected size
-    const quantity = qty.value; // Get the quantity
-    const userId = user.value.ID;
-    try {
-        await axios.post("/cart/add-to-cart", {
-            itemId: itemId,
-            size: size,
-            quantity: quantity,
-            userId: userId,
-        });
-        console.log("Added to cart");
-    } catch (error) {
-        console.log("Adding to cart failed");
-    }
-};
-</script>

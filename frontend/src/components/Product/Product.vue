@@ -19,12 +19,10 @@ const fetchItem = async () => {
     const data = await response.json();
     item.value = data;
     images.value = data.images;
-    modelPath.value = data.models[0]; // Assuming each item has only one model for simplicity
+    modelPath.value = data.models[0];
 
-    // Debug log to check the fetched item
-    console.log('Fetched item:', item.value);
-    console.log('Fetched images:', images.value);
-    console.log('Model path:', modelPath.value);
+    // Set the document title to the product name
+    document.title = data.name;
   } catch (error) {
     console.error('Error fetching item:', error);
   }

@@ -2,13 +2,14 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import knex from '../../db/knex.js'; // Adjust the path to your knex instance
 
-const createUser = async (req, res, db) => { // Add db parameter
+export const createUser = async (req, res) => {
   try {
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, address, city, postal_code } = req.body;
 
     // Check if the email is already registered
-    const existingUser = await db('user').where({ email }).first();
+    const existingUser = await knex('user').where({ email }).first();
     if (existingUser) {
       return res.status(400).json({ message: 'Email is already registered' });
     }
@@ -17,12 +18,15 @@ const createUser = async (req, res, db) => { // Add db parameter
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Store user data in the database
-    await db('user').insert({
+    await knex('user').insert({
       firstname,
       lastname,
       email,
       password: hashedPassword,
-      role: 0 // Assuming the default role is 0
+      role: 0,
+      address,
+      postal_code,
+      city,
     });
 
     res.status(201).json({ message: 'User created successfully' });
@@ -32,12 +36,12 @@ const createUser = async (req, res, db) => { // Add db parameter
   }
 };
 
-const loginUser = async (req, res, db) => { // Add db parameter
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     // Retrieve user data from the database based on email
-    const user = await db('user').where({ email }).first();
+    const user = await knex('user').where({ email }).first();
 
     // Check if user exists
     if (!user) {
@@ -60,20 +64,18 @@ const loginUser = async (req, res, db) => { // Add db parameter
   }
 };
 
-const getUserByEmail = async (req, res, db) => {
+export const getUserByEmail = async (req, res) => {
   const { email } = req.params;
 
   try {
-    const user = await db('user').where({ email }).first();
+    const user = await knex('user').where({ email }).first();
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    console.log(user)
+    console.log(user);
     res.status(200).json(user);
   } catch (error) {
     console.error('Error getting user by email:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
-
-export { createUser, loginUser, getUserByEmail };
