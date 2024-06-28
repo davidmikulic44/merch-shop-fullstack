@@ -17,7 +17,7 @@
       </div>
       </section>
   </RouterLink>
-      <button
+      <button v-if="view!='checkout'"
         class="remove-from-cart"
         @click="removeItemFromCart(item.ID)"
         aria-label="Remove item from cart"
@@ -33,6 +33,7 @@ import CloseIcon from "../../assets/icons/CloseIcon.vue";
 
 const props = defineProps({
   item: Object,
+  view: String,
 });
 
 const emit = defineEmits(['removeItem']);

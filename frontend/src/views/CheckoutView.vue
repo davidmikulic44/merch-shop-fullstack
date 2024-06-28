@@ -1,7 +1,7 @@
 <template>
     <Header></Header>
     <div class="cart-checkout-container">
-        <Cart></Cart>
+        <Cart view="checkout"></Cart>
         <Checkout></Checkout>
     </div>
 

@@ -1,25 +1,24 @@
-// src/controllers/itemController.js
-
 import knex from '../../db/knex.js';
 
 export const getItems = async (req, res) => {
-  const { category } = req.query; // Get the category from the query parameters
+  const { category } = req.query;
   try {
     let query = knex('item')
       .leftJoin('images', 'item.id', 'images.item_id')
       .select('item.*', knex.raw('GROUP_CONCAT(images.image) as images'))
-      .groupBy('item.id'); // Group by item id to avoid duplicate items
+      .groupBy('item.id');
 
     if (category) {
-      query = query.where('item.category_id', knex('categories').select('id').where('category', category));
+      query = query.where('item.category_id',
+        knex('categories')
+        .select('id')
+        .where('category', category));
     }
-
     const items = await query;
 
-    // Map images to the item
     const itemsWithImages = items.map(item => ({
       ...item,
-      images: item.images ? item.images.split(',') : []  // Split the concatenated string into an array
+      images: item.images ? item.images.split(',') : [] 
     }));
 
     res.status(200).json(itemsWithImages);
@@ -60,7 +59,6 @@ export const getItemById = async (req, res) => {
       .where('item_id', id)
       .select('model');
 
-    // Attach images and models to the item object
     item.images = images.map(img => img.image);
     item.models = models.map(mod => mod.model);
 

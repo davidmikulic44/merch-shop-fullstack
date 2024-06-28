@@ -31,6 +31,7 @@ const fetchCategories = async () => {
         }
         const data = await response.json();
         categoryList.value = data;
+        categoryList.value.push(categoryList.value.shift())
         if (!activeCategory.value && categoryList.value.length) {
             activeCategory.value = categoryList.value[0].category;
             localStorage.setItem("activeCategory", categoryList.value[0].category);
@@ -38,6 +39,7 @@ const fetchCategories = async () => {
         } else {
             emit('categorySelected', activeCategory.value);
         }
+
     } catch (error) {
         console.error('Error fetching categories:', error);
     }

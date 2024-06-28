@@ -34,7 +34,7 @@ onMounted(async () => {
         const response = await axios.get(
             "http://localhost:3000/spotify/random-songs/" + playlistId
         );
-        song.value = response.data[0]; //first song
+        song.value = response.data; //first song
     } catch (error) {
         console.error("Error fetching song data:", error);
     }

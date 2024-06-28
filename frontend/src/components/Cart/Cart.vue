@@ -19,6 +19,7 @@
           >
         </section>
         <CartItem
+          :view="view"
           v-for="item in cartItems"
           :key="item.ID"
           :item="item"
@@ -54,7 +55,7 @@ import CartItem from "./CartItem.vue";
 
 const { user } = useUser();
 const route = useRoute();
-
+const props = defineProps("cartView");
 const cartItems = ref([]);
 const totalCost = ref(0);
 const itemsInCartAmount = ref(0);

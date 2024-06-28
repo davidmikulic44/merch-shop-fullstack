@@ -14,31 +14,32 @@ async function getAccessToken() {
   try {
     const data = await spotifyApi.clientCredentialsGrant();
     spotifyApi.setAccessToken(data.body['access_token']);
-  } catch (err) {
+  } catch (error) {
     console.error('Something went wrong when retrieving an access token', err);
   }
 }
 
 export async function getRandomSongsFromPlaylist(req, res) {
-  const playlistId = req.params.playlistId; // Get playlist ID from route parameters
-
+  const playlistId = req.params.playlistId;
   try {
     await getAccessToken();
 
     const data = await spotifyApi.getPlaylistTracks(playlistId);
     const tracks = data.body.items;
 
-    const randomTracks = [];
-    const numOfRandomTracks = 5; // Number of random songs you want to get
-    for (let i = 0; i < numOfRandomTracks; i++) {
-      const randomIndex = Math.floor(Math.random() * tracks.length);
-      randomTracks.push(tracks[randomIndex].track);
-      tracks.splice(randomIndex, 1); // Remove selected track to avoid duplicates
+    if (tracks.length === 0) {
+      return res.status(404).json({ message: 'No tracks found in the playlist' });
     }
 
-    res.json(randomTracks);
-  } catch (err) {
-    console.error('Something went wrong when retrieving the playlist tracks', err);
+    const randomIndex = Math.floor(Math.random() * tracks.length);
+    const randomTrack = tracks[randomIndex].track;
+
+    res.json(randomTrack);
+  } catch (error) {
+    console.error('Error retrieving playlist tracks', error);
     res.status(500).send('Internal Server Error');
   }
 }
+
+
+
