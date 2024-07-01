@@ -9,7 +9,6 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const container = ref(null);
-let isRotating = ref(true);
 let camera, scene, renderer, controls, model;
 
 const props = defineProps(["modelPath"]);
@@ -31,7 +30,6 @@ function initThree() {
     const backgroundTexture = new THREE.CanvasTexture(canvas);
     scene.background = backgroundTexture;
 
-    // Create a camera
     camera = new THREE.PerspectiveCamera(
         75,
         canvas.width / canvas.height,

@@ -41,3 +41,9 @@ a {
     color: $background-primary;
     background: $green-light;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}

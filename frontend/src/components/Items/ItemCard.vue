@@ -25,7 +25,7 @@ const props = defineProps({
 
 
 const getImageUrl = (images) => {
-  return images && images.length > 0 ? images[0] : '/src/assets/images/placeholder.jpg'; // Adjust placeholder image path as needed
+  return images && images.length > 0 ? images[0] : 'assets/images/placeholder.png';
 };
 </script>
 

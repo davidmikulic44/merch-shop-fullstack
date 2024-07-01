@@ -20,7 +20,7 @@ const fetchCartItemCount = async (userId) => {
         updateCart(itemCount, totalQuantity);
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            updateCart(0, 0); // No active cart found
+            updateCart(0, 0);
         } else {
             console.error("Failed to fetch cart item count:", error);
         }

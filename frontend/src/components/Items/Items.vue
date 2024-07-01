@@ -15,19 +15,20 @@
 import { ref } from "vue";
 import Categories from "../Categories/Categories.vue";
 import ItemCard from "./ItemCard.vue";
+import axios from "axios";
 
 const items = ref([]);
 
 const fetchItems = async (category) => {
     try {
-        const response = await fetch(`http://localhost:3000/items?category=${category}`);
-        if (!response.ok) {
-            throw new Error("Failed to fetch items");
-        }
-        const data = await response.json();
-        items.value = data;
+        const response = await axios.get(`http://localhost:3000/items`, {
+            params: { category }
+        });
+        
+        items.value = response.data;
     } catch (error) {
         console.error("Error fetching items:", error);
     }
 };
 </script>
+

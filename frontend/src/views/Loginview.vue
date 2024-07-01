@@ -9,3 +9,4 @@ import Footer from '../components/Footer/Footer.vue';
     <LoginForm></LoginForm>
     <Footer></Footer>
 </template>
+

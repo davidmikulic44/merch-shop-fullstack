@@ -5,8 +5,7 @@ import Heart from "../../assets/icons/Heart.vue";
 import CartIcon from "../../assets/icons/CartIcon.vue";
 import LogOutIcon from "../../assets/icons/LogOutIcon.vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
-import { cartItemCount, sum, fetchCartItemCount } from "../../store/cart.js"; // Import cart store
+import { cartItemCount, sum, fetchCartItemCount } from "../../store/cart.js";
 
 const router = useRouter();
 

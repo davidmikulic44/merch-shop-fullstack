@@ -60,10 +60,8 @@ const cartItems = ref([]);
 const totalCost = ref(0);
 const itemsInCartAmount = ref(0);
 
-// Destructure emit from the setup context
 const emit = defineEmits(['removeItem']);
 
-// Function to fetch active cart items
 const fetchActiveCart = async () => {
   try {
     const response = await axios.get(`/cart/active-cart/${user.value.ID}`);
@@ -75,10 +73,8 @@ const fetchActiveCart = async () => {
       totalCost.value = cartItems.value[0].cost;
     }
 
-    // Update the itemsInCartAmount value
     itemsInCartAmount.value = cartItems.value.length;
 
-    // Log cart items to debug
     console.log("Fetched cart items:", cartItems.value);
   } catch (error) {
     console.error("Error fetching active cart:", error);
@@ -91,7 +87,6 @@ const fetchActiveCart = async () => {
   }
 };
 
-// Function to remove an item from the cart
 const removeItemFromCart = async (cartItemId) => {
   try {
     await axios.delete(`/cart/remove-item/${cartItemId}`);

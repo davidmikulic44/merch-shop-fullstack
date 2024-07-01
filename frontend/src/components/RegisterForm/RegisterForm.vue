@@ -131,8 +131,6 @@ const register = async () => {
             city: city.value,
             postal_code: postal_code.value,
         });
-
-        // Login user after successful registration
         try {
             await loginUser(email.value, password.value, router);
         } catch (error) {

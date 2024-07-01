@@ -40,7 +40,7 @@ const routes = [
       }
     },
     {
-      path: '/cart',  // The URL path for the cart view
+      path: '/cart',
       component: CartView,
       name: 'Cart',
       meta: {
@@ -48,7 +48,7 @@ const routes = [
       }
     },
     {
-      path: '/checkout',  // Define the path for the checkout view
+      path: '/checkout',
       component: CheckoutView,
       name: 'Checkout',
       meta: {

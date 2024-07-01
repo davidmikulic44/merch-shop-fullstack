@@ -1,7 +1,6 @@
 import knex from '../../db/knex.js';
 
 export const getAllCategories = async (req, res) => {
-    console.log('getAllCategories controller function called');
     try {
         const categories = await knex('categories').select('category');
         res.status(200).json(categories);

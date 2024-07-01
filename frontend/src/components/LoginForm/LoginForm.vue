@@ -1,19 +1,23 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from 'vue-router';
-import { loginUser } from "../../store/auth.js";
+
 import EnvelopeIcon from '../../assets/icons/EnvelopeIcon.vue';
 import KeyIcon from '../../assets/icons/KeyIcon.vue';
 
+import { loginUser } from "../../store/auth.js";
 const email = ref("");
 const password = ref("");
 const router = useRouter();
+const errorMessage = ref("");
 
 const login = async () => {
   try {
+    errorMessage.value = "";
     await loginUser(email.value, password.value, router);
   } catch (error) {
     console.error("Login failed:", error.message);
+    errorMessage.value = "Invalid email or password";
   }
 };
 </script>
@@ -21,7 +25,7 @@ const login = async () => {
 <template>
   <div class="auth-container">
     <form @submit.prevent="login" class="auth-form">
-      <h4>Prijavi se</h4>
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div>
         <input
           type="email"
@@ -39,12 +43,12 @@ const login = async () => {
           id="password"
           v-model="password"
           class="auth-input"
-          placeholder="password"
+          placeholder="lozinka"
           required
         />
         <KeyIcon class="auth-icon" />
       </div>
-      <button type="submit" class="auth-submit">LOGIN</button>
+      <button type="submit" class="auth-submit">PRIJAVI SE</button>
     </form>
   </div>
 </template>

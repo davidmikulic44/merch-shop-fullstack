@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import ProductCarousel from './ProductCarousel.vue';
 import ProductRender from '../ProductRender/ProductRender.vue';
 import ProductInfo from './ProductInfo.vue';
+import axios from 'axios';
 
 const route = useRoute();
 const item = ref(null);
@@ -12,21 +13,17 @@ const modelPath = ref('');
 
 const fetchItem = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/items/${route.params.id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch item');
-    }
-    const data = await response.json();
-    item.value = data;
-    images.value = data.images;
-    modelPath.value = data.models[0];
+    const response = await axios.get(`http://localhost:3000/items/${route.params.id}`);
+    item.value = response.data;
+    images.value = response.data.images;
+    modelPath.value = response.data.models[0];
 
-    // Set the document title to the product name
-    document.title = data.name;
+    document.title = response.data.name;
   } catch (error) {
     console.error('Error fetching item:', error);
   }
 };
+
 onMounted(fetchItem);
 </script>
 
