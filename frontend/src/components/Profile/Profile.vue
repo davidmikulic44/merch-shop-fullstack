@@ -36,11 +36,8 @@ const { user } = useUser();
 const items = ref([]);
 const fetchItems = async () => {
     try {
-        const response = await axios.get("http://localhost:3000/items"); // Use axios.get
-        items.value = response.data; // Assign the data property from the response
-
-        // Debug log
-        console.log("Fetched items:", items.value);
+        const response = await axios.get("http://localhost:3000/items");
+        items.value = response.data;
     } catch (error) {
         console.error("Error fetching items:", error);
     }

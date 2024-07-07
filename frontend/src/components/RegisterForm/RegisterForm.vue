@@ -115,7 +115,7 @@ const errorMessage = ref("");
 const router = useRouter();
 
 const register = async () => {
-    errorMessage.value = "";  // Reset the error message
+    errorMessage.value = "";
     if (password.value !== confirmPassword.value) {
         errorMessage.value = "Lozinke se ne podudaraju";
         return;

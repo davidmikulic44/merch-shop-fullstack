@@ -1,7 +1,6 @@
 import knex from '../../db/knex.js';
 
 export const addToCart = async (req, res) => {
-    console.log('Request Body:', req.body);
     const { itemId, size, quantity, userId } = req.body;
 
     const trx = await knex.transaction();
@@ -13,7 +12,6 @@ export const addToCart = async (req, res) => {
             cartId = newCart;
         } else {
             cartId = unpaidCarts[unpaidCarts.length - 1].ID;
-            console.log('Using Existing Cart ID:', cartId);
         }
         const item = await trx('item').where({ ID: itemId }).first();
         if (!item) {

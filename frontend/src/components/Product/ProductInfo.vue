@@ -40,7 +40,6 @@ const addToCart = async () => {
             quantity: quantity,
             userId: userId,
         });
-        console.log("Added to cart");
 
         const response = await axios.get(`/cart/active-cart/${userId}`);
         const itemCount = response.data.length;
@@ -50,7 +49,7 @@ const addToCart = async () => {
         }
         updateCart(itemCount, totalQuantity);
     } catch (error) {
-        console.log("Adding to cart failed");
+        console.error("Adding to cart failed");
     }
 };
 </script>

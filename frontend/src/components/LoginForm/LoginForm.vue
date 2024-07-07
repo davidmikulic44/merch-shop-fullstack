@@ -23,7 +23,7 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="auth-container">
+  <div class="auth-container login-container">
     <form @submit.prevent="login" class="auth-form">
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div>
