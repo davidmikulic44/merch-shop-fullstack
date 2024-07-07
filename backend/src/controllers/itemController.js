@@ -5,7 +5,7 @@ export const getItems = async (req, res) => {
   try {
     let query = knex('item')
       .leftJoin('images', 'item.id', 'images.item_id')
-      .select('item.*', knex.raw('GROUP_CONCAT(images.image) as images'))
+      .select('item.*', knex.raw('GROUP_CONCAT(images.image ORDER BY images.image SEPARATOR ",") as images'))
       .groupBy('item.id');
 
     if (category) {
@@ -14,12 +14,15 @@ export const getItems = async (req, res) => {
         .select('id')
         .where('category', category));
     }
+
     const items = await query;
 
     const itemsWithImages = items.map(item => ({
       ...item,
-      images: item.images ? item.images.split(',') : [] 
+      images: item.images ? item.images.split(',') : []
     }));
+
+    console.log('Items with images array:', itemsWithImages);  // Log the items with images array
 
     res.status(200).json(itemsWithImages);
   } catch (error) {
@@ -27,6 +30,8 @@ export const getItems = async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
 
 
 export const createItem = async (req, res) => {
