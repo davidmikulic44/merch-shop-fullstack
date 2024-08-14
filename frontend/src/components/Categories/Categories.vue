@@ -17,7 +17,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-// Define the emit function
 const emit = defineEmits(['categorySelected']);
 
 const categoryList = ref([]);

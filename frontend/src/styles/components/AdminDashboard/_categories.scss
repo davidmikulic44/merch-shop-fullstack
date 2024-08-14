@@ -1,0 +1,24 @@
+.category-row {
+    @include flexCenterRow;
+    gap: 10px;
+}
+
+.category-name {
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.new-category {
+    @include flexCenterColumn;
+    gap: 10px;
+    input {
+        text-align: center;
+
+    }
+}
+
+.category-form {
+    @include flexCenterRow;
+    gap: 10px;
+}

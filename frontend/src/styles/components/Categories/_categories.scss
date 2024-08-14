@@ -13,6 +13,7 @@
 .category-btn {
     @include buttonStyle;
     font-size: 23px;
+    line-height: 28px;
 }
 
 .active-category {

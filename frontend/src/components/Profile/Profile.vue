@@ -1,56 +1,88 @@
 <template>
-    <div v-if="user.role === 'admin'" class="admin-container">
-        <h1>admin dashboard</h1>
-        <section class="admin-items">
-            <div>
-                <form class="new-item">
-                    <input type="name" name="item" id="name" placeholder="name" required >
-                    <input type="number" name="item" id="price" placeholder="price" required>
-                    <input type="name" name="item" id="category" placeholder="category" required>
-                    <textarea name="item" id="imagepath" cols="30" rows="10" placeholder="image path"></textarea>
-                    <textarea name="item" id="modelpath" cols="30" rows="10" placeholder="model path"></textarea>
-                    <button type="submit" @click="addItem">add new</button>
-                </form>
-            </div>
-            <div v-for="item in items" :key="item.id">
-                <ItemCard :item="item" />
-            </div>
-        </section>
-    </div>
-    <div v-else>
-        <h1>email: {{ user.email }}</h1>
-        <h1>firstname: {{ user.firstname }}</h1>
-        <h1>lastname: {{ user.lastname }}</h1>
-        <h1>address: {{ user.address }}</h1>
-        <h1>city: {{ user.city }}</h1>
-        <h1>postal code: {{ user.postal_code }}</h1>
-    </div>
+  <div v-if="user.role === 'admin'" class="admin-container">
+    <AdminDashboard></AdminDashboard>
+  </div>
+  <!-- Regular User Profile -->
+  <div class="user-profile-container" v-else>
+
+    <form @submit.prevent="updateUserProfile">
+      <div>
+        <label class="user-label">Email:</label>
+        <span class="user-information">{{ user.email }}</span>
+      </div>
+      <div>
+        <label class="user-label">First Name:</label>
+        <span class="user-information">{{ user.firstname }}</span>
+      </div>
+      <div>
+        <label class="user-label">Last Name:</label>
+        <span class="user-information">{{ user.lastname }}</span>
+      </div>
+      <div>
+        <label class="user-label">Address:</label>
+        <span class="user-information" v-if="!isEditing">{{ user.address }}</span>
+        <input class="user-information-input" v-else v-model="editableUser.address" type="text" placeholder="Address" />
+      </div>
+      <div>
+        <label class="user-label">City:</label>
+        <span class="user-information" v-if="!isEditing">{{ user.city }}</span>
+        <input class="user-information-input" v-else v-model="editableUser.city" type="text" placeholder="City" />
+      </div>
+      <div>
+        <label class="user-label">Postal Code:</label>
+        <span class="user-information" v-if="!isEditing">{{ user.postal_code }}</span>
+        <input class="user-information-input" v-else v-model="editableUser.postal_code" type="text" placeholder="Postal Code" />
+      </div>
+      
+      <div v-if="isEditing" class="form-buttons">
+        <button class="action-button" type="submit">Save Changes</button>
+        <button class="action-button-danger" type="button" @click="cancelEdit">Cancel</button>
+      </div>
+      <button class="action-button" v-else type="button" @click="startEdit">Edit Profile</button>
+    </form>
+  </div>
+  <Footer></Footer>
 </template>
+
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref } from "vue";
+import AdminDashboard from "../AdminDashboard/AdminDashboard.vue";
+import Footer from "../Footer/Footer.vue";
 import { useUser } from "../../store/auth";
-import ItemCard from '../Items/ItemCard.vue'
+import axios from "axios";
 
 const { user } = useUser();
-const items = ref([]);
-const fetchItems = async () => {
-    try {
-        const response = await axios.get("http://localhost:3000/items");
-        items.value = response.data;
-    } catch (error) {
-        console.error("Error fetching items:", error);
-    }
+const editableUser = ref({ ...user.value });
+const isEditing = ref(false);
+
+const startEdit = () => {
+  isEditing.value = true;
+  editableUser.value = { ...user.value }; // Make a copy of the current user data
 };
 
-const addItem = async () => {
-    try {
+const cancelEdit = () => {
+  isEditing.value = false;
+  editableUser.value = { ...user.value }; // Reset the editable fields
+};
 
-    }
-    catch (error) {
-        console.error("error adding item", error);
-    }
-}
+const updateUserProfile = async () => {
+  try {
+  console.log("updating user profil")
+    const updatedUserData = { ...editableUser.value, ID: user.value.ID };
+    
+    const response = await axios.put(
+      `http://localhost:3000/auth/profile`,
+      updatedUserData
+    );
 
-onMounted(fetchItems);
+    if (response.status === 200) {
+      Object.assign(user.value, response.data); // Update the user store with the new data
+      isEditing.value = false; // Exit the editing mode
+      alert("Profile updated successfully!");
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    alert("Failed to update profile. Please try again.");
+  }
+};
 </script>

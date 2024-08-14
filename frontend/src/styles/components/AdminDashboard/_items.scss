@@ -1,0 +1,24 @@
+.new-item {
+    @include flexCenterColumn;
+    gap: 10px;
+}
+
+.editing-item {
+    @include flexCenterRow;
+    justify-content: space-between;
+}
+
+.edit-item-form {
+    @include flexCenterColumn;
+    gap: 10px;
+}
+
+.item-admin {
+    @include flexCenterColumn;
+    gap: 10px;
+}
+
+.items-admin {
+    @include flexCenterRow;
+    flex-wrap: wrap;
+}

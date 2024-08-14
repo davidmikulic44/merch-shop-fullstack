@@ -6,6 +6,7 @@ import itemRoutes from './src/routes/itemRoutes.js'
 import cartRoutes from './src/routes/cartRoutes.js'
 import spotifyRoutes from './src/routes/spotifyRoutes.js';
 import categoryRoutes from './src/routes/categoryRoutes.js';
+import orderRoutes from './src/routes/orderRoutes.js'
 
 const app = express();
 dotenv.config({ path: './.env' });
@@ -17,6 +18,7 @@ app.use('/items', itemRoutes)
 app.use('/cart', cartRoutes)
 app.use('/spotify', spotifyRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/orders', orderRoutes)
 app.use(serveStatic("../frontend/dist"));
 
 const port = process.env.PORT || 3000;

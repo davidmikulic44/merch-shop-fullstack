@@ -45,7 +45,7 @@ const hasItemsInCart = computed(() => cartItemCount.value > 0);
                 <p v-if="hasItemsInCart" class="cart-amount">{{ sum }}</p>
             </RouterLink>
             <section v-if="user" class="header-user">
-                <h1 to="/profile" class="header-text">Pozdrav, {{ user.firstname }}!</h1>
+                <RouterLink to="/profile" class="header-text">Pozdrav, {{ user.firstname }}!</RouterLink>
                 <span @click="logout()" class="header-action-btn">
                     <LogOutIcon></LogOutIcon> Odjava
                 </span>

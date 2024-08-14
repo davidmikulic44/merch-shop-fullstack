@@ -1,0 +1,19 @@
+.user-profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    padding-bottom: 350px;
+    background-color: $background-primary;
+    color: $foreground-primary;
+}
+
+
+.action-button-danger {
+    @include actionButton($red-light);
+}
+
+.action-button {
+    @include actionButton($green-light);
+}

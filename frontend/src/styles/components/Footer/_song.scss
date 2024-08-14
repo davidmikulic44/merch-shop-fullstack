@@ -30,4 +30,5 @@
 
 .song-info {
     @include flexColumn;
+    line-height: 25px;
 }

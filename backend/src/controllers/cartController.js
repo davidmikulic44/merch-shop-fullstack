@@ -140,3 +140,37 @@ export const removeItemFromCart = async (req, res) => {
     }
   };
   
+  export const getCartDetails = async (req, res) => {
+    // Extract cartId from request parameters
+    const { cartId } = req.params;
+    
+    console.log('Requested Cart ID:', cartId); // Debug: Print the cartId to ensure it's being received correctly
+  
+    try {
+      // Fetch cart details along with item information
+      const cartDetails = await knex('cart_item')
+        .join('item', 'cart_item.item_id', 'item.ID') // Join cart_item with item to get item details
+        .select(
+          'cart_item.ID as cart_item_id',
+          'cart_item.cart_id',
+          'cart_item.item_id',
+          'cart_item.size',
+          'cart_item.quantity',
+          'item.name',
+          'item.price',
+          'item.category'
+        )
+        .where('cart_item.cart_id', cartId); // Use cartId to filter the cart items
+  
+      console.log('Cart Details:', cartDetails); // Debug: Print the fetched cart details
+  
+      if (cartDetails.length === 0) {
+        return res.status(404).json({ message: 'No items found in this cart' });
+      }
+  
+      res.status(200).json(cartDetails);
+    } catch (error) {
+      console.error('Error fetching cart details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
