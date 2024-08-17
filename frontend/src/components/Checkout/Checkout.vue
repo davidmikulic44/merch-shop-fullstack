@@ -2,6 +2,7 @@
     <div class="checkout-container">
         <form class="checkout-form" @submit.prevent="submitCheckout">
             <h1>Informacije za naplatu:</h1>
+            <!-- Display user details if logged in -->
             <section v-if="user" class="checkout-details">
                 <div class="input-container">
                     <label>Ime:</label>
@@ -24,6 +25,7 @@
                     <p>{{ user.postal_code }}</p>
                 </div>
             </section>
+            <!-- Display input fields for guests -->
             <section v-else>
                 <div class="input-container">
                     <label for="firstName">Ime:</label>
@@ -65,6 +67,15 @@
                         required
                     />
                 </div>
+                <div class="input-container">
+                    <label for="email">E-mail:</label>
+                    <input
+                        type="email"
+                        id="email"
+                        v-model="email"
+                        required
+                    />
+                </div>
             </section>
             <div class="input-container">
                 <label for="paymentMethod">Vrsta plaćanja:</label>
@@ -73,6 +84,7 @@
                     <option value="pp">Plaćanje pouzećem</option>
                 </select>
             </div>
+            <!-- Display card details section if payment method is card -->
             <section v-if="paymentMethod === 'card'" class="checkout-form">
                 <div class="input-container">
                     <label for="cardNumber">Broj kartice:</label>
@@ -118,7 +130,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { useUser } from "../../store/auth.js";
@@ -128,6 +140,7 @@ const lastName = ref("");
 const address = ref("");
 const city = ref("");
 const postalCode = ref("");
+const email = ref("");
 const paymentMethod = ref("card");
 const cardNumber = ref("");
 const expiryDate = ref("");
@@ -140,6 +153,9 @@ const cvvError = ref("");
 const { user } = useUser();
 const router = useRouter();
 
+// Fetch the guestId from localStorage or generate a new one if not available
+const guestId = ref(localStorage.getItem('guestId') || null);
+console.log("guest: ",guestId)
 const validateCardDetails = () => {
     cardNumberError.value = "";
     expiryDateError.value = "";
@@ -194,19 +210,58 @@ const submitCheckout = async () => {
         return;
     }
 
-    const userId = user.value?.ID || null;
+    if (user.value) {
+        // Submit checkout for logged-in users
+        await submitCheckoutForUser();
+    } else {
+        // Fetch guest cart ID and submit checkout for guests
+        await fetchGuestCartId();
+    }
+};
+
+const submitCheckoutForUser = async () => {
+    const payload = {
+        cartId: user.value.cartId, // Use the cartId from the user object
+        paymentMethod: paymentMethod.value,
+        userId: user.value.ID
+    };
 
     try {
-        await axios.post("http://localhost:3000/cart/update-status", {
-            userId,
-        });
+        await axios.post("http://localhost:3000/cart/update-status", payload);
         router.push("/checkout/success");
     } catch (error) {
         console.error("Error updating cart:", error);
     }
 };
+
+const fetchGuestCartId = async () => {
+    try {
+        const response = await axios.get(`http://localhost:3000/guest/guest-cart-id/${guestId.value}`);
+        const guestCartId = response.data.cartId;
+
+        await submitCheckoutForGuest(guestCartId);
+    } catch (error) {
+        console.error("Error fetching guest cart ID:", error);
+    }
+};
+
+const submitCheckoutForGuest = async (guestCartId) => {
+    const payload = {
+        cartId: guestCartId, // Use the fetched guest cart ID
+        paymentMethod: paymentMethod.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        address: address.value,
+        city: city.value,
+        postalCode: postalCode.value,
+        email: email.value
+    };
+
+    try {
+        await axios.post("http://localhost:3000/guest/update-guest-cart-status", payload);
+        router.push("/checkout/success");
+    } catch (error) {
+        console.error("Error updating guest cart:", error);
+    }
+};
 </script>
-
-<style scoped>
-
-</style>
